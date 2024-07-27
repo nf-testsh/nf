@@ -30,7 +30,6 @@ download_extra_data() {
     IATACODE2=$(curl ${CURL_OPTS} -s "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/reference/IATACode2.txt")
     if [ -z "$MEDIA_COOKIE" ] || [ -z "$IATACODE" ] || [ -z "$IATACODE2" ]; then
         echo -e "${Font_Red}Extra data download failed.${Font_Suffix}"
-        delay 1
     fi
 }
 
@@ -54,4 +53,3 @@ download_extra_data() {
          region=$(echo "$tmpresult" | grep -woP '"requestCountry":{"id":"\K\w\w' | head -n 1)
         echo -n -e "\r Netflix:\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
     fi
-
