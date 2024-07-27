@@ -4,7 +4,7 @@ UA_BROWSER="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 UA_SEC_CH_UA='"Google Chrome";v="125", "Chromium";v="125", "Not.A/Brand";v="24"'
 UA_ANDROID="Mozilla/5.0 (Linux; Android 10; Pixel 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36"
 
-color_print() {
+
     Font_Black="\033[30m"
     Font_Red="\033[31m"
     Font_Green="\033[32m"
@@ -14,7 +14,7 @@ color_print() {
     Font_SkyBlue="\033[36m"
     Font_White="\033[37m"
     Font_Suffix="\033[0m"
-}
+
 
 
 
@@ -55,4 +55,3 @@ download_extra_data() {
         echo -n -e "\r Netflix:\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}\n"
     fi
 
-    echo -n -e "\r Netflix:\t\t\t${Font_Red}Failed (Error: ${result1}_${result2})${Font_Suffix}\n"
