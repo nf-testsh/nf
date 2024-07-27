@@ -16,7 +16,7 @@ UA_ANDROID="Mozilla/5.0 (Linux; Android 10; Pixel 4) AppleWebKit/537.36 (KHTML, 
     Font_Suffix="\033[0m"
 
 
- echo -n -e "\r ${Font_Green}Netflix解锁检测脚本：（nfdns.top）${Font_Suffix}\n"
+ echo -n -e "\r ${Font_Green}Netflix解锁检测脚本：  by: nfdns.top${Font_Suffix}\n"
 
 count_run_times() {
     local tmpresult=$(curl ${CURL_OPTS} -s "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fcheck.unclock.media&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visit&edge_flat=false")
