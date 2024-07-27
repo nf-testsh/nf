@@ -16,7 +16,7 @@ UA_ANDROID="Mozilla/5.0 (Linux; Android 10; Pixel 4) AppleWebKit/537.36 (KHTML, 
     Font_Suffix="\033[0m"
 
 
- echo -n -e "\r ${Font_Green}*Netflix解锁检测  By nfdns.top ${Font_Suffix}\n"
+ echo -n -e "\r *Netflix解锁检测  By nfdns.top \n"
 
 count_run_times() {
     local tmpresult=$(curl ${CURL_OPTS} -s "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fcheck.unclock.media&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visit&edge_flat=false")
@@ -32,7 +32,7 @@ download_extra_data() {
         echo -e "${Font_Red}Extra data download failed.${Font_Suffix}"
     fi
 }
-echo -n -e "\r 检测中\n"
+
     # LEGO Ninjago
  result1=$(curl ${CURL_DEFAULT_OPTS} -fsL 'https://www.netflix.com/title/81280792' -w %{http_code} -o /dev/null -H 'host: www.netflix.com' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' --user-agent "${UA_BROWSER}")
     # Breaking bad
