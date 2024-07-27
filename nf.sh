@@ -16,7 +16,7 @@ UA_ANDROID="Mozilla/5.0 (Linux; Android 10; Pixel 4) AppleWebKit/537.36 (KHTML, 
     Font_Suffix="\033[0m"
 
 
- echo -n -e "\r ${Font_Green}Netflix解锁检测脚本  by: nfdns.top${Font_Suffix}\n"
+ echo -n -e "\r ${Font_Green}*Netflix解锁检测  By nfdns.top ${Font_Suffix}\n"
 
 count_run_times() {
     local tmpresult=$(curl ${CURL_OPTS} -s "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fcheck.unclock.media&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visit&edge_flat=false")
@@ -42,13 +42,13 @@ echo -n -e "\r 检测中\n"
         echo -n -e "\r ${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
     fi
     if [ "$result1" == '404' ] && [ "$result2" == '404' ]; then
-        echo -n -e "\r ${Font_Yellow}仅自制${Font_Suffix}\n"
+        echo -n -e "\r ${Font_Yellow}您目前仅自制${Font_Suffix}\n"
     fi
     if [ "$result1" == '403' ] || [ "$result2" == '403' ]; then
-        echo -n -e "\r ${Font_Red}不支持解锁${Font_Suffix}\n"
+        echo -n -e "\r ${Font_Red}您目前不支持解锁${Font_Suffix}\n"
     fi
     if [ "$result1" == '200' ] || [ "$result2" == '200' ]; then
          tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.netflix.com/' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' --user-agent "${UA_BROWSER}")
          region=$(echo "$tmpresult" | grep -woP '"requestCountry":{"id":"\K\w\w' | head -n 1)
-        echo -n -e "\r ${Font_Green}完整解锁非自制 (解锁地区: ${region})${Font_Suffix}\n"
+        echo -n -e "\r ${Font_Green}您目前完整解锁非自制 (解锁地区: ${region})${Font_Suffix}\n"
     fi
