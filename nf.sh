@@ -33,8 +33,7 @@ UA_ANDROID="Mozilla/5.0 (Linux; Android 10; Pixel 4) AppleWebKit/537.36 (KHTML, 
         echo -n -e "\r ${Font_Red}您目前不支持解锁${Font_Suffix}\n"
     fi
     if [ "$result1" == '200' ] || [ "$result2" == '200' ]; then
-    echo -n -e "\r ${Font_Green}您目前完整解锁非自制"
          tmpresult=$(curl ${CURL_DEFAULT_OPTS} -sL 'https://www.netflix.com/' -H 'accept-language: en-US,en;q=0.9' -H "sec-ch-ua: ${UA_SEC_CH_UA}" -H 'sec-ch-ua-mobile: ?0' -H 'sec-ch-ua-platform: "Windows"' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'sec-fetch-user: ?1' -H 'sec-fetch-dest: document' --user-agent "${UA_BROWSER}")
          region=$(echo "$tmpresult" | grep -woP '"requestCountry":{"id":"\K\w\w' | head -n 1)
-        echo -n -e "\r ${Font_Green}(解锁地区: ${region})${Font_Suffix}\n"
+        echo -n -e "\r ${Font_Green}您目前完整解锁非自制剧    (解锁地区: ${region})${Font_Suffix}\n"
     fi
