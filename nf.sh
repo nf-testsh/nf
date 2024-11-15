@@ -35,7 +35,7 @@ UA_ANDROID="Mozilla/5.0 (Linux; Android 10; Pixel 4) AppleWebKit/537.36 (KHTML, 
         echo -n -e "\r ${Font_Red}您目前不支持解锁${Font_Suffix}\n"
     fi
     if [ "$result1" == '200' ] || [ "$result2" == '200' ]; then
-         regiontmp=$(curl $curlArgs 4 -fSsI -X GET --max-time 10 --write-out %{redirect_url} --output /dev/null --tlsv1.3 "https://www.netflix.com/login" 2>&1 )
+         regiontmp=$(curl $curlArgs -4 -fSsI -X GET --max-time 10 --write-out %{redirect_url} --output /dev/null --tlsv1.3 "https://www.netflix.com/login" 2>&1 )
          region=$(echo $regiontmp | cut -d '/' -f4 | cut -d '-' -f1 | tr [:lower:] [:upper:])
         echo -n -e "\r ${Font_Green}您目前完整解锁非自制剧    (解锁地区: ${region})${Font_Suffix}\n"
     fi
