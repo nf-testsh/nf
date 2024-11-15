@@ -4,25 +4,14 @@ curlArgs="$useNIC $usePROXY $xForward $resolve $dns --max-time 10"
 UA_BROWSER="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
 UA_SEC_CH_UA='"Google Chrome";v="125", "Chromium";v="125", "Not.A/Brand";v="24"'
 UA_ANDROID="Mozilla/5.0 (Linux; Android 10; Pixel 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36"
+Font_White="\033[37m"
+Font_Suffix="\033[0m"
 
-
-    Font_Black="\033[30m"
-    Font_Red="\033[31m"
-    Font_Green="\033[32m"
-    Font_Yellow="\033[33m"
-    Font_Blue="\033[34m"
-    Font_Purple="\033[35m"
-    Font_SkyBlue="\033[36m"
-    Font_White="\033[37m"
-    Font_Suffix="\033[0m"
-
-
- echo -n -e "\r *Netflix解锁检测  By nfdns.top \n"
-
-    # LEGO Ninjago
+echo -n -e "\r *Netflix解锁检测  By nfdns.top \n"
+# LEGO Ninjago
  result1=$(curl $curlArgs -4 --user-agent "${UA_Browser}" -fsLI -X GET --write-out %{http_code} --output /dev/null --max-time 10 --tlsv1.3 "https://www.netflix.com/title/81280792"  2>&1)
   echo -n -e "\r------------------\n"  
-    # Breaking bad
+# Breaking bad
  result2=$(curl $curlArgs -4 --user-agent "${UA_Browser}" -fsLI -X GET --write-out %{http_code} --output /dev/null --max-time 10 --tlsv1.3 "https://www.netflix.com/title/70143836" 2>&1)
 
     if [ "${result1}" == '000' ] || [ "$result2" == '000' ]; then
