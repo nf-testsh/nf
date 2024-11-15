@@ -4,6 +4,10 @@ curlArgs="$useNIC $usePROXY $xForward $resolve $dns --max-time 10"
 UA_BROWSER="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
 UA_SEC_CH_UA='"Google Chrome";v="125", "Chromium";v="125", "Not.A/Brand";v="24"'
 UA_ANDROID="Mozilla/5.0 (Linux; Android 10; Pixel 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36"
+
+Font_Red="\033[31m"
+Font_Green="\033[32m"
+Font_Yellow="\033[33m"
 Font_White="\033[37m"
 Font_Suffix="\033[0m"
 
