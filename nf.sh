@@ -8,7 +8,6 @@ UA_ANDROID="Mozilla/5.0 (Linux; Android 10; Pixel 4) AppleWebKit/537.36 (KHTML, 
 Font_Red="\033[31m"
 Font_Green="\033[32m"
 Font_Yellow="\033[33m"
-Font_White="\033[37m"
 Font_Suffix="\033[0m"
 
 echo -n -e "\r *Netflix解锁检测  By nfdns.top \n"
