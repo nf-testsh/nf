@@ -61,7 +61,7 @@ elif [[ "$STATUS_CODE" == "200" ]]; then
         echo -e "${Font_Green}您目前完整解锁非自制剧 || (解锁地区: ${REGION})${Font_Suffix}"
     else
         # 200 OK 但没有特征码
-        echo -e "${Font_Red}检测异常(ip无法解锁或仅自制)${Font_Suffix}"
+        echo -e "${Font_Red}您目前不支持解锁或仅支持自制${Font_Suffix}"
     fi
 
 else
