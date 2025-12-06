@@ -20,7 +20,7 @@ cleanup() {
 trap cleanup EXIT
 
 # 请求页面
-STATUS_CODE=$(curl -4 -r 0-10000 --no-keepalive -s -o "$TEMP_BODY" -w "%{http_code}" -L -A "$UA" --connect-timeout 1.5 --max-time 3 "$URL")
+STATUS_CODE=$(curl -4 -r 0-10000 --no-keepalive -s -o "$TEMP_BODY" -w "%{http_code}" -L -A "$UA" --connect-timeout 1 --max-time 2 "$URL")
 
 # --- 逻辑判断 ---
 
@@ -49,7 +49,7 @@ elif [[ "$STATUS_CODE" == "200" ]]; then
         
         # --- 确认解锁成功，现在才检测地区 (优化速度) ---
         # 尝试访问 login 页面看跳转地址
-        REGION_URL=$(curl -4 -fsSI -X GET -A "$UA" --max-time 3 --write-out %{redirect_url} --output /dev/null "https://www.netflix.com/login" 2>/dev/null)
+        REGION_URL=$(curl -4 -fsSI -X GET -A "$UA" --max-time 2 --write-out %{redirect_url} --output /dev/null "https://www.netflix.com/login" 2>/dev/null)
         
         # 提取地区: 从 https://www.netflix.com/jp-en/login 提取 'jp'
         REGION=$(echo "$REGION_URL" | cut -d '/' -f4 | cut -d '-' -f1 | tr '[:lower:]' '[:upper:]')
