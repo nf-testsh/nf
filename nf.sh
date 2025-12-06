@@ -1,3 +1,4 @@
+root@debian:~# cat nf.sh 
 #!/bin/bash
 
 # --- 配置区 ---
@@ -20,7 +21,7 @@ cleanup() {
 trap cleanup EXIT
 
 # 请求页面
-STATUS_CODE=$(curl -4 -s -o "$TEMP_BODY" -w "%{http_code}" -L -A "$UA" --connect-timeout 2 --max-time 4 "$URL")
+STATUS_CODE=$(curl -4 -r 0-10000 --no-keepalive -s -o "$TEMP_BODY" -w "%{http_code}" -L -A "$UA" --connect-timeout 1.5 --max-time 3 "$URL")
 
 # --- 逻辑判断 ---
 
@@ -49,7 +50,7 @@ elif [[ "$STATUS_CODE" == "200" ]]; then
         
         # --- 确认解锁成功，现在才检测地区 (优化速度) ---
         # 尝试访问 login 页面看跳转地址
-         REGION_URL=$(curl -fsSI -X GET -A "$UA" --max-time 3 --write-out %{redirect_url} --output /dev/null "https://www.netflix.com/login" 2>/dev/null)
+        REGION_URL=$(curl -4 -fsSI -X GET -A "$UA" --max-time 3 --write-out %{redirect_url} --output /dev/null "https://www.netflix.com/login" 2>/dev/null)
         
         # 提取地区: 从 https://www.netflix.com/jp-en/login 提取 'jp'
         REGION=$(echo "$REGION_URL" | cut -d '/' -f4 | cut -d '-' -f1 | tr '[:lower:]' '[:upper:]')
@@ -61,10 +62,10 @@ elif [[ "$STATUS_CODE" == "200" ]]; then
         echo -e "${Font_Green}您目前完整解锁非自制剧 || (解锁地区: ${REGION})${Font_Suffix}"
     else
         # 200 OK 但没有特征码
-        echo -e "${Font_Red}检测异常 (ip无法解锁或仅支持自制)${Font_Suffix}"
+        echo -e "${Font_Red}检测异常(ip无法解锁或仅自制)${Font_Suffix}"
     fi
 
 else
     # 其他状态码
-    echo -e "${Font_Red}检测失败 (状态码: $STATUS_CODE)${Font_Suffix}"
+    echo -e "${Font_Red}检测异常(状态码: $STATUS_CODE)${Font_Suffix}"
 fi
