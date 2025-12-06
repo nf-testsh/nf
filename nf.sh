@@ -1,4 +1,3 @@
-root@debian:~# cat nf.sh 
 #!/bin/bash
 
 # --- 配置区 ---
