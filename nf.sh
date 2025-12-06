@@ -20,7 +20,7 @@ cleanup() {
 trap cleanup EXIT
 
 # 请求页面
-STATUS_CODE=$(curl -s -o "$TEMP_BODY" -w "%{http_code}" -L -A "$UA" --max-time 10 "$URL")
+STATUS_CODE=$(curl -s -o "$TEMP_BODY" -w "%{http_code}" -L -A "$UA" --max-time 3 "$URL")
 
 # --- 逻辑判断 ---
 
