@@ -133,21 +133,14 @@ echo "-------------------------------------"
 echo -e "*AI解锁检测 By nfdns.top"
 echo "-------------------------------------"
 
-# 1. 执行 IPv4 检测
 echo -e "${Font_Blue}>> Checking IPv4 Networks...${Font_Suffix}"
 IP_VER="-4"
 Run_Test_Suite
 
-# 2. 检测 IPv6 连通性
-echo "-------------------------------------"
-echo -e "${Font_Blue}>> Checking IPv6 Networks...${Font_Suffix}"
-
 if curl -6 -s --head --max-time 3 "http://ipv6.google.com" > /dev/null 2>&1; then
-
+    echo "-------------------------------------"
+    echo -e "${Font_Blue}>> Checking IPv6 Networks...${Font_Suffix}"
     IP_VER="-6"
     Run_Test_Suite
-else
-    echo -e "${Font_Yellow}IPv6 connectivity not detected or unstable.${Font_Suffix}"
 fi
-
 echo "-------------------------------------"
