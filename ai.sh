@@ -11,7 +11,7 @@ UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 
 IP_VER="-4"
 
-# --- 核心请求函数 ---
+# --- 请求函数 ---
 curl_get() {
     curl $IP_VER --user-agent "${UA_Browser}" \
          -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8" \
@@ -58,7 +58,6 @@ Check_Sora() {
         sleep 0.5
     done
 
-    # 判定逻辑
     if [ -n "$region" ]; then
         echo -e "Sora:\t\t\t${Font_Green}Yes (Region: ${region})${Font_Suffix}"
         return
@@ -104,7 +103,7 @@ Check_Claude() {
     fi
 }
 
-# --- Copilot (极简版) ---
+# --- Copilot ---
 Check_Copilot() {
     # 仅检测可用性，不显示地区
     local api_res=$(curl_get "https://copilot.microsoft.com/turing/conversation/chats?bundleVersion=1.1342.3-cplt.12")
@@ -119,7 +118,7 @@ Check_Copilot() {
     fi
 }
 
-# --- 封装测试套件 ---
+# --- 封装 ---
 Run_Test_Suite() {
     Check_ChatGPT
     Check_Sora
