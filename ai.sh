@@ -105,7 +105,6 @@ Check_Claude() {
 
 # --- Copilot ---
 Check_Copilot() {
-    # 仅检测可用性，不显示地区
     local api_res=$(curl_get "https://copilot.microsoft.com/turing/conversation/chats?bundleVersion=1.1342.3-cplt.12")
     local web_res=$(curl_get "https://copilot.microsoft.com/")
 
