@@ -127,7 +127,13 @@ Run_Test_Suite() {
     Check_Copilot
 }
 
-# --- 执行逻辑 ---
+# --- 主程序 ---
+
+HAS_IPV6=false
+if curl -6 -s --head --max-time 3 "http://ipv6.google.com" > /dev/null 2>&1; then
+    HAS_IPV6=true
+fi
+
 echo "-------------------------------------"
 echo -e "*AI解锁检测 By nfdns.top"
 echo "-------------------------------------"
@@ -136,7 +142,7 @@ echo -e "${Font_Blue}>> Checking IPv4 Networks...${Font_Suffix}"
 IP_VER="-4"
 Run_Test_Suite
 
-if curl -6 -s --head --max-time 3 "http://ipv6.google.com" > /dev/null 2>&1; then
+if [ "$HAS_IPV6" = true ]; then
     echo "-------------------------------------"
     echo -e "${Font_Blue}>> Checking IPv6 Networks...${Font_Suffix}"
     IP_VER="-6"
