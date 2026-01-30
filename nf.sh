@@ -73,7 +73,6 @@ echo "-------------------------------------"
 Check_Netflix_Core "-4"
 
 if curl -6 -s --head --max-time 3 "http://ipv6.google.com" > /dev/null 2>&1; then
-    # 只有当 IPv6 连通性测试通过时，才执行检测
     Check_Netflix_Core "-6"
 fi
 
