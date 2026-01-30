@@ -4,13 +4,17 @@
 Font_Red="\033[31m"
 Font_Green="\033[32m"
 Font_Yellow="\033[33m"
+Font_Blue="\033[34m"
 Font_Suffix="\033[0m"
+
 # 使用最新版 Chrome UA
 UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
 
-# --- 核心请求函数 (增强 Header) ---
+IP_VER="-4"
+
+# --- 核心请求函数 ---
 curl_get() {
-    curl -4 --user-agent "${UA_Browser}" \
+    curl $IP_VER --user-agent "${UA_Browser}" \
          -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8" \
          -H "Accept-Language: en-US,en;q=0.9" \
          -s --max-time 10 "$1"
@@ -42,20 +46,16 @@ Check_ChatGPT() {
     fi
 }
 
-# --- Sora (稳定性增强) ---
+# --- Sora ---
 Check_Sora() {
     local region=""
-    
-    # 方法1：Trace 接口重试机制 (最多尝试 3 次)
     for i in {1..3}; do
         local trace_result=$(curl_get "https://sora.com/cdn-cgi/trace")
         region=$(echo "$trace_result" | grep "loc=" | cut -d= -f2)
         
-        # 如果成功获取到地区，立即跳出循环
         if [ -n "$region" ]; then
             break
         fi
-        # 失败则等待 0.5 秒后重试
         sleep 0.5
     done
 
@@ -65,8 +65,7 @@ Check_Sora() {
         return
     fi
 
-    # 方法2：降级检测 (如果 Trace 3次都失败，检查主页 HTTP 状态码)
-    local login_check=$(curl -4 --user-agent "${UA_Browser}" -sLI --max-time 10 -o /dev/null -w "%{http_code}" "https://sora.com/")
+    local login_check=$(curl $IP_VER --user-agent "${UA_Browser}" -sLI --max-time 10 -o /dev/null -w "%{http_code}" "https://sora.com/")
     if [[ "$login_check" == "200" ]] || [[ "$login_check" == "302" ]]; then
         echo -e "Sora:\t\t\t${Font_Green}Yes${Font_Suffix}"
     else
@@ -95,7 +94,7 @@ Check_Gemini() {
 
 # --- Claude ---
 Check_Claude() {
-    local response=$(curl -4 -s -L -A "${UA_Browser}" -o /dev/null -w '%{url_effective}' --max-time 10 "https://claude.ai/login")
+    local response=$(curl $IP_VER -s -L -A "${UA_Browser}" -o /dev/null -w '%{url_effective}' --max-time 10 "https://claude.ai/login")
     
     if [[ "$response" == *"claude.ai/login"* ]] || [[ "$response" == "https://claude.ai/" ]]; then
         echo -e "Claude AI:\t\t${Font_Green}Yes${Font_Suffix}"
@@ -121,12 +120,36 @@ Check_Copilot() {
     fi
 }
 
-# --- 执行 ---
+# --- 封装测试套件 ---
+Run_Test_Suite() {
+    Check_ChatGPT
+    Check_Sora
+    Check_Gemini
+    Check_Claude
+    Check_Copilot
+}
+
+# --- 执行逻辑 ---
 echo "-------------------------------------"
 echo -e "*AI解锁检测 By nfdns.top"
-Check_ChatGPT
-Check_Sora
-Check_Gemini
-Check_Claude
-Check_Copilot
+echo "-------------------------------------"
+
+# 1. 执行 IPv4 检测
+echo -e "${Font_Blue}>> Checking IPv4 Networks...${Font_Suffix}"
+IP_VER="-4"
+Run_Test_Suite
+
+# 2. 检测 IPv6 连通性
+echo "-------------------------------------"
+echo -e "${Font_Blue}>> Checking IPv6 Networks...${Font_Suffix}"
+
+# 尝试连接 Google 的 IPv6 地址来验证连通性
+if curl -6 -s --head --max-time 3 "http://ipv6.google.com" > /dev/null 2>&1; then
+    # 如果 IPv6 通畅，切换变量并执行测试
+    IP_VER="-6"
+    Run_Test_Suite
+else
+    echo -e "${Font_Yellow}IPv6 connectivity not detected or unstable.${Font_Suffix}"
+fi
+
 echo "-------------------------------------"
