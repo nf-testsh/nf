@@ -7,7 +7,6 @@ Font_Yellow="\033[33m"
 Font_Blue="\033[34m"
 Font_Suffix="\033[0m"
 
-# 使用最新版 Chrome UA
 UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
 
 IP_VER="-4"
@@ -143,9 +142,8 @@ Run_Test_Suite
 echo "-------------------------------------"
 echo -e "${Font_Blue}>> Checking IPv6 Networks...${Font_Suffix}"
 
-# 尝试连接 Google 的 IPv6 地址来验证连通性
 if curl -6 -s --head --max-time 3 "http://ipv6.google.com" > /dev/null 2>&1; then
-    # 如果 IPv6 通畅，切换变量并执行测试
+
     IP_VER="-6"
     Run_Test_Suite
 else
