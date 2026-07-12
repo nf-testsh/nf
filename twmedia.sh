@@ -1,9 +1,11 @@
 #!/bin/bash
 
+# 终端输出颜色
 Green='\033[0;32m'
 Red='\033[0;31m'
 NC='\033[0m'
 
+# 全局通用参数与请求头 (统一设置 10 秒超时)
 UA_BROWSER="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
 
 echo "----------------------------------------"
