@@ -105,17 +105,23 @@ Check_Claude() {
 
 # --- Copilot ---
 Check_Copilot() {
-    local api_res=$(curl_get "https://copilot.microsoft.com/turing/conversation/chats?bundleVersion=1.1342.3-cplt.12")
-    local web_res=$(curl_get "https://copilot.microsoft.com/")
-
-    if echo "$api_res" | grep -q '"value":"Success"'; then
-        echo -e "Microsoft Copilot:\t${Font_Green}Yes${Font_Suffix}"
-    elif echo "$web_res" | grep -iqE "Edge_C_Chat|Copilot"; then
+    local raw_output=$(curl $IP_VER -s -L -A "${UA_Browser}" -w "\n%{url_effective}" --max-time 10 "https://copilot.com/")
+    local url_effect=$(echo "$raw_output" | tail -n 1)  
+    if [[ "$url_effect" == *"cn.bing.com"* ]] || [[ "$url_effect" == *"bing.com"* && "$url_effect" != *"copilot"* ]]; then
+        echo -e "Microsoft Copilot:\t${Font_Red}No (Region Redirected)${Font_Suffix}"
+        return
+    fi 
+    if echo "$raw_output" | grep -iqE "region not supported|not available in your country"; then
+        echo -e "Microsoft Copilot:\t${Font_Red}No (Region Blocked)${Font_Suffix}"
+        return
+    fi
+    if [[ "$url_effect" == *"copilot.com"* ]]; then
         echo -e "Microsoft Copilot:\t${Font_Green}Yes${Font_Suffix}"
     else
         echo -e "Microsoft Copilot:\t${Font_Red}No${Font_Suffix}"
     fi
 }
+
 
 # --- 封装 ---
 Run_Test_Suite() {
