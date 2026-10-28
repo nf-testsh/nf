@@ -55,14 +55,15 @@ function check_MyVideo() {
 
 # 4. 4GTV
 function check_4GTV() {
-    local res=$(curl -sL -m 10 -A "${UA_BROWSER}" "https://api2.4gtv.tv/Web/IsTaiwanArea")
-    [ -z "$res" ] && { echo -e " 4GTV:                   ${Red}Failed (Network)${NC}"; return; }
-    
-    if echo "$res" | grep -q '"Data":"Y"'; then
-        echo -e " 4GTV:                   ${Green}Yes${NC}"
-    else
-        echo -e " 4GTV:                   ${Red}No${NC}"
-    fi
+    local code=$(curl -sS -o /dev/null -I -m 5 -A "${UA_BROWSER}" \
+        -w "%{http_code}" "https://www.4gtv.tv/channel")
+
+    case "$code" in
+        200) echo -e " 4GTV:                   ${Green}Yes (TW)${NC}" ;;
+        403) echo -e " 4GTV:                   ${Red}No${NC}" ;;
+        000) echo -e " 4GTV:                   ${Red}Failed (Network)${NC}" ;;
+        *)   echo -e " 4GTV:                   ${Red}Failed (Code: ${code})${NC}" ;;
+    esac
 }
 
 # 5. LINE TV
