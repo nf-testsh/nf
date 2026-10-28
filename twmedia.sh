@@ -104,18 +104,14 @@ function check_CatchPlay() {
 
 # 8. HBO Max
 function check_HBOMax() {
-# 核心优化：加入 --compressed 参数，大幅压缩网页体积，秒出结果
-    local res=$(curl -sLi --compressed -m 10 -A "${UA_BROWSER}" "https://www.max.com/")
-    [ -z "$res" ] && { echo -e " HBO Max:                ${Red}Failed (Network)${NC}"; return; }
-    
-    local region=$(echo "$res" | grep -woP 'countryCode=\K[A-Z]{2}' | head -n 1)
-    [ -z "$region" ] && { echo -e " HBO Max:                ${Red}No${NC}"; return; }
-    
-    local countryList=$(echo "$res" | grep -woP '"url":"/[a-z]{2}/[a-z]{2}"' | cut -f4 -d'"' | cut -f2 -d'/' | tr a-z A-Z)
-    if echo "$countryList US" | grep -q "$region"; then
+    local hdr=$(curl -sS -o /dev/null -D - -m 10 -A "${UA_BROWSER}" -L "https://www.hbomax.com/")
+    [ -z "$hdr" ] && { echo -e " HBO Max:                ${Red}Failed (Network)${NC}"; return; }
+
+    local region=$(echo "$hdr" | grep -woiP 'countryCode=\K[A-Za-z]{2}' | head -n 1 | tr a-z A-Z)
+    if [ -n "$region" ]; then
         echo -e " HBO Max:                ${Green}Yes (Region: ${region})${NC}"
     else
-        echo -e " HBO Max:                ${Red}No (Region: ${region})${NC}"
+        echo -e " HBO Max:                ${Red}No${NC}"
     fi
 }
 
