@@ -109,7 +109,7 @@ function check_HBOMax() {
 
     local region=$(echo "$hdr" | grep -woiP 'countryCode=\K[A-Za-z]{2}' | head -n 1 | tr a-z A-Z)
     if [ -n "$region" ]; then
-        echo -e " HBO Max:                ${Green}Yes (Region: ${region})${NC}"
+        echo -e " HBO Max:                ${Green}Yes (${region})${NC}"
     else
         echo -e " HBO Max:                ${Red}No${NC}"
     fi
